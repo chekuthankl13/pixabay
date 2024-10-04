@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pixabay/modules/home/cubit/home_cubit.dart';
+import 'package:pixabay/modules/preview/ui/preview_screen.dart';
 import 'package:pixabay/utils/utils.dart';
 
 class HOmeScreen extends StatefulWidget {
@@ -88,58 +89,63 @@ if(index >= state.images.length){
 }else{
 
 var data = state.images[index];
-return Stack(
-  children: [
-    ClipRRect(
-      borderRadius:const BorderRadius.only(
-        topLeft: Radius.circular(8), 
-        topRight: Radius.circular(8)
-      ),
-      child:Image.network(data.image, 
-      loadingBuilder: (context, child,ImageChunkEvent? loadingProgress) {
-        if (loadingProgress == null)return child;
-        return const Center(child: Icon(Icons.image_rounded,color: Colors.black26,));
-      },
-      fit: BoxFit.cover,
-      height: responsiveWidth(context),
-      width: sW(context),
-      ) ,),
-      Positioned(
-        bottom: 0,
-        left: 0, 
-        right: 0,
-        child: Container(
-          height: 30, 
-          // width: sW(context),
-          color: Colors.black45,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  spaceWidth(10),
-             const Icon(Icons.favorite_border,color: Colors.red,size: 20,), 
-              spaceWidth(2),
-              Text(data.likes,style:const TextStyle(color: Colors.white),)
-                ],
-              ), 
-
-              Row(
-                children: [
-                  spaceWidth(10),
-             const Icon(Icons.remove_red_eye_outlined,color: Colors.white60,size: 20,), 
-              spaceWidth(2),
-              Text(data.views,style:const TextStyle(color: Colors.white),), 
-                  spaceWidth(5),
-
-                ],
-              )
-
-            ],
-          ),
+return GestureDetector(
+  onTap: (){
+    navigatorKey.currentState!.push(MaterialPageRoute(builder: (_)=>PreviewScreen(image: data.image)));
+  },
+  child: Stack(
+    children: [
+      ClipRRect(
+        borderRadius:const BorderRadius.only(
+          topLeft: Radius.circular(8), 
+          topRight: Radius.circular(8)
         ),
-      )
-  ],
+        child:Image.network(data.image, 
+        loadingBuilder: (context, child,ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null)return child;
+          return const Center(child: Icon(Icons.image_rounded,color: Colors.black26,));
+        },
+        fit: BoxFit.cover,
+        height: responsiveWidth(context),
+        width: sW(context),
+        ) ,),
+        Positioned(
+          bottom: 0,
+          left: 0, 
+          right: 0,
+          child: Container(
+            height: 30, 
+            // width: sW(context),
+            color: Colors.black45,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    spaceWidth(10),
+               const Icon(Icons.favorite_border,color: Colors.red,size: 20,), 
+                spaceWidth(2),
+                Text(data.likes,style:const TextStyle(color: Colors.white),)
+                  ],
+                ), 
+  
+                Row(
+                  children: [
+                    spaceWidth(10),
+               const Icon(Icons.remove_red_eye_outlined,color: Colors.white60,size: 20,), 
+                spaceWidth(2),
+                Text(data.views,style:const TextStyle(color: Colors.white),), 
+                    spaceWidth(5),
+  
+                  ],
+                )
+  
+              ],
+            ),
+          ),
+        )
+    ],
+  ),
 );
      }},)
   

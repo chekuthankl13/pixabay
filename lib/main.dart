@@ -20,6 +20,7 @@ class MainApp extends StatelessWidget {
          appBarTheme:const AppBarTheme(
           surfaceTintColor: Colors.transparent, 
           backgroundColor: Colors.black, 
+          foregroundColor: Colors.white,
           titleTextStyle: TextStyle(color: Colors.white)
          ),
           useMaterial3: true,
